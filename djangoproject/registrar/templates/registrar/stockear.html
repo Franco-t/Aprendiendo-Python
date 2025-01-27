@@ -1,0 +1,142 @@
+{% extends "registrar/base.html" %}
+{% load static %}
+{% block content %}
+
+{% csrf_token %}
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-4 shadow p-3">
+            <div id="reader" width="600px"></div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'registrar/plugins/scanapp.min.js' %}"></script>
+<script src="{% static 'registrar/js/stockear.js' %}"></script>
+
+<form id="stockear-form" method="post">
+    {% csrf_token %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Codigo</th>
+                <th scope="col"><input class="form-control" type="number" id="codigo" name="codigo_barra" value="" aria-label="readonly input example"></th>
+            </tr>
+            <tr>
+                <th scope="col">Producto</th>
+                <th scope="col"><input class="form-control" type="text" id="producto" name="producto" value="" aria-label="readonly input example"></th>
+            </tr>
+            <tr>
+                <th scope="col">Contenido</th>
+                <th scope="col"><input class="form-control" type="number" id="contenido" name="contenido" value="" aria-label="readonly input example"></th>
+            </tr>
+            <tr>
+                <th scope="col">Precio</th>
+                <th scope="col"><input class="form-control" type="number" id="precio" name="precio" value="" aria-label="readonly input example"></th>
+            </tr>
+            <tr>
+                <th scope="col">Cantidad</th>
+                <th scope="col"><input class="form-control" type="number" id="cantidad" name="cantidad" value="" aria-label="readonly input example"></th>
+            </tr>
+            <tr>
+                <th scope="col">Fecha de Ingreso</th>
+                <th scope="col"><input class="form-control" type="date" id="fechaIngreso" name="fecha_ingreso" value="" aria-label="readonly input example"></th>
+            </tr>
+            <tr>
+                <th scope="col">Marca</th>
+                <th scope="col">
+                    <select class="form-select" id="marca" name="marca" required>
+                        {% for marca in marcas %}
+                            <option value="{{ marca.nombreMarca }}">{{ marca.nombreMarca }}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+                <th scope="col"><a href="#" onclick="redirectToAgregarMarca()">Agregar</a></th>
+            </tr>
+            <tr>
+                <th scope="col">Categoria</th>
+                <th scope="col">
+                    <select class="form-select" id="categoria" name="categoria" required onchange="updateSubcategorias()">
+                        {% for categoria in categorias %}
+                            <option value="{{ categoria.nombreCategoria }}">{{ categoria.nombreCategoria }}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+                <th scope="col"><a href="{% url 'agregarcategoria' %}">Agregar</a></th>
+            </tr>
+            <tr>
+                <th scope="col">Sub Categoria</th>
+                <th scope="col">
+                    <select class="form-select" id="subcategoria" name="subcategoria" required>
+                        <!-- Subcategorias will be populated based on selected categoria -->
+                    </select>
+                </th>
+                <th scope="col"><a href="{% url 'agregarsubcategoria' %}">Agregar</a></th>
+            </tr>
+        </thead>
+    </table>
+    <button type="submit" class="btn btn-primary">Guardar Producto</button>
+</form>
+
+<script>
+    function updateSubcategorias() {
+        const categoriaNombre = document.getElementById('categoria').value;
+        const subcategoriaSelect = document.getElementById('subcategoria');
+        subcategoriaSelect.innerHTML = ''; // Clear existing options
+
+        if (categoriaNombre) {
+            fetch(`/api/subcategorias/?categoria=${encodeURIComponent(categoriaNombre)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.subcategorias && data.subcategorias.length > 0) {
+                        data.subcategorias.forEach(subcategoria => {
+                            const option = document.createElement('option');
+                            option.value = subcategoria.nombreSubcategoria;
+                            option.textContent = subcategoria.nombreSubcategoria;
+                            subcategoriaSelect.appendChild(option);
+                        });
+                    } else {
+                        const option = document.createElement('option');
+                        option.value = '';
+                        option.textContent = 'No hay subcategorías disponibles';
+                        subcategoriaSelect.appendChild(option);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching subcategorias:', error);
+                    const option = document.createElement('option');
+                    option.value = '';
+                    option.textContent = 'Error al cargar subcategorías';
+                    subcategoriaSelect.appendChild(option);
+                });
+        } else {
+            const option = document.createElement('option');
+            option.value = '';
+            option.textContent = 'Seleccione una categoría primero';
+            subcategoriaSelect.appendChild(option);
+        }
+    }
+
+    function redirectToAgregarMarca() {
+        // Save form data to localStorage
+        const formData = new FormData(document.getElementById('stockear-form'));
+        for (const [key, value] of formData.entries()) {
+            localStorage.setItem(key, value);
+        }
+        // Redirect to agregar marca page
+        window.location.href = "{% url 'agregarmarca' %}";
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load form data from localStorage
+        const inputs = document.querySelectorAll('#stockear-form input, #stockear-form select');
+        inputs.forEach(input => {
+            const value = localStorage.getItem(input.name);
+            if (value) {
+                input.value = value;
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "registrar/base.html" %}
+
+{% block content %}
+
+<h2>Agregar Marca</h2>
+    <form method="post">
+        {% csrf_token %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Marca</th>
+                    <th scope="col"><input class="form-control" type="text" id="nombre_marca" name="nombre_marca" value="" aria-label="readonly input example" required></th>
+                </tr>
+                <tr>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col"><input class="form-control" type="text" id="descripcion_marca" name="descripcion_marca" value="" aria-label="readonly input example"></th>
+                </tr>
+            </thead>
+        </table>
+        <button type="submit" class="btn btn-primary">Agregar Marca</button>
+    </form>
+
+{% endblock %}

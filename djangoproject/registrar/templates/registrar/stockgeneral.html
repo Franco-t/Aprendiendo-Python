@@ -1,0 +1,32 @@
+{% extends "registrar/base.html" %}
+
+{% block content %}
+
+    <h1>Stock general</h1>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Contenido</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Vencimiento</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.marca.nombreMarca }}</td>
+                    <td>{{ producto.nombreProducto }}</td>
+                    <td>{{ producto.precio }}</td>
+                    <td>{{ producto.contenido }}</td>
+                    <td>{{ producto.cantidad }}</td>
+                    <td>{{ producto.fechaVencimiento }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

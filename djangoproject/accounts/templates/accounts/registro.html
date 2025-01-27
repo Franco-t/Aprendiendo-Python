@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiosco</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="formulario">
+        <h1>Registrase</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="username">
+                <input type="text" name="username" placeholder="Nombre de usuario" required>
+                <label>Nombre de usuario</label>
+                <span></span>
+            </div>
+            <div class="username">
+                <input type="email" name="email" placeholder=" " required>
+                <label>Correo</label>
+                <span></span>
+            </div>
+            <div class="username">
+                <input type="password" name="password1" placeholder=" " required>
+                <label>Contraseña</label>
+                <span></span>
+            </div>
+            <div class="username">
+                <input type="password" name="password2" placeholder=" " required>
+                <label>Repetir Contraseña</label>
+                <span></span>
+            </div>
+            <div class="username">
+                <input type="text" name="admin_username" placeholder=" " required>
+                <label>Nombre de admin</label>
+                <span></span>
+            </div>
+            <div class="username">
+                <input type="password" name="admin_password" placeholder=" " required>
+                <label>Contraseña de admin</label>
+                <span></span>
+            </div>
+            <input type="submit" class="input-personalizado" value="Registrarse">
+        </form>
+    </div>
+</body>
+</html>

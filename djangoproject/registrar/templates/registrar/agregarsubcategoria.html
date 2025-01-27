@@ -1,0 +1,42 @@
+{% extends "registrar/base.html" %}
+
+{% block content %}
+
+<h2>Agregar Sub Categoria</h2>
+<form method="post">
+    {% csrf_token %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Categoria</th>
+                <th scope="col">
+                    <select class="form-select" id="categoria" name="categoria" required>
+                        {% for categoria in categorias %}
+                            <option value="{{ categoria.nombreCategoria }}">{{ categoria.nombreCategoria }}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+            </tr>
+            <tr>
+                <th scope="col">Sub Categoria</th>
+                <th scope="col"><input class="form-control" type="text" id="nombre_subcategoria" name="nombre_subcategoria" required></th>
+            </tr>
+            <tr>
+                <th scope="col">Descripcion</th>
+                <th scope="col"><input class="form-control" type="text" id="descripcion_subcategoria" name="descripcion_subcategoria"></th>
+            </tr>
+            <tr>
+                <th scope="col">Tipo de Subcategoría:</th>
+                <th scope="col">
+                    <select class="form-select" id="tipo_subcategoria" name="tipo_subcategoria" required>
+                        <option value="descartable">Descartable</option>
+                        <option value="retornable">Retornable</option>
+                    </select>
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <button type="submit" class="btn btn-primary">Guardar Sub Categoria</button>
+</form>
+
+{% endblock %}

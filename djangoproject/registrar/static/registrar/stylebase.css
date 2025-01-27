@@ -1,0 +1,27 @@
+/* Ajusta el ancho del offcanvas */
+.offcanvas.offcanvas-end {
+    --bs-offcanvas-width: 250px; /* Ajusta este valor según tus necesidades */
+}
+
+/* Estilos personalizados para la imagen en miniatura */
+.navbar-brand img {
+    width: 50px; /* Ajusta este valor según tus necesidades */
+    height: auto; /* Mantiene la proporción de la imagen */
+    padding: .25rem; /* Ajusta el padding según tus necesidades */
+    background-color: var(--bs-body-bg); /* Ajusta el color de fondo según tus necesidades */
+    border-width: var(--bs-border-width); /* Ajusta el ancho del borde según tus necesidades */
+    border-color: var(--bs-border-color); /* Ajusta el color del borde según tus necesidades */
+    border-radius: var(--bs-border-radius); /* Ajusta el radio del borde según tus necesidades */
+    box-shadow: var(--bs-box-shadow-sm); /* Ajusta la sombra según tus necesidades */
+}
+
+/* Asegura que el main comience donde termina el header y termine donde empieza el footer */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header, main, footer {
+    padding: 1rem; /* Ajusta el padding según tus necesidades */
+}

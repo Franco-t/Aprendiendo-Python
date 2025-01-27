@@ -1,0 +1,23 @@
+<!-- filepath: /D:/Archivo de Programa/proyecto personal/python/djangoproject/registrar/templates/registrar/bienvenido.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiosco</title>
+    <link rel="stylesheet" href="{% static 'registrar/style.css' %}">
+</head>
+<body>
+    <div class="formulario">
+        <h1>Elige tu proceso</h1>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="button" class="button" onclick="location.href='{% url 'atender' %}'">Atender</button>
+            <button type="button" class="button" onclick="location.href='{% url 'stockear' %}'">Stockear</button>
+            <button type="button" class="button" onclick="location.href='{% url 'stockgeneral' %}'">Stock General</button>
+            <button type="submit" class="button">Cerrar Sesión</button>
+        </form>
+    </div>
+</body>
+</html>
