@@ -1,0 +1,17 @@
+header {
+  height: 200px;
+  width: 1300px;
+  background-color: #f5dcb4;
+  display: flex;
+}
+
+#imgLogo {
+  /* Cambiado de .imgLogo a #imgLogo */
+  height: 100px;
+  width: auto; /* Mantiene la proporción de la imagen */
+}
+
+header ul {
+  text-align: right;
+  list-style: none;
+}
